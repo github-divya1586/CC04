@@ -49,7 +49,7 @@
                 <input type="submit" value="LOGIN"  class="btn btn-success btn-block btn-lg gradient-custom-4 text-body"/>
                </div>
 
-          <p class="text-center text-muted mt-5 mb-0">Not Register <a href="login.jsp"
+          <p class="text-center text-muted mt-5 mb-0">Not Register <a href="register.jsp"
                     class="fw-bold text-body"><u>Register here</u></a></p>
 
               </form>
