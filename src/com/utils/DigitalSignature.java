@@ -5,8 +5,7 @@ import java.security.PrivateKey;
 import java.security.PublicKey;  
 import java.security.SecureRandom;  
 import java.security.Signature;  
-import java.util.Scanner;  
-import javax.xml.bind.DatatypeConverter;  
+import java.util.Scanner;   
 public class DigitalSignature  
 {  
 //algorithms to use sign the document  
@@ -45,7 +44,7 @@ String input = "Java is an" + "object-oriented language";
 KeyPair keyPair = generateRSAKeyPair();  
 //function calling  
 byte[] sig = createDigitalSignature(input.getBytes(), keyPair.getPrivate());  
-System.out.println("Signature Value:\n " + DatatypeConverter.printHexBinary(sig));  
+//System.out.println("Signature Value:\n " + DatatypeConverter.printHexBinary(sig));  
 System.out.println("Verification: "+ verifyDigitalSignature(input.getBytes(), sig, keyPair.getPublic()));  
 }  
 }  
