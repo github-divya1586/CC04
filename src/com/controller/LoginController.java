@@ -32,7 +32,7 @@ public class LoginController extends HttpServlet {
 		
 		if(emailid.equalsIgnoreCase("trust") && password.equalsIgnoreCase("trust")) {
 			
-			req.setAttribute("alert", "Trust Authority");
+			req.setAttribute("alert", "Trust Auth");
 	        req.getRequestDispatcher("trust.jsp").forward(req, resp);
 		}else if(emailid.equalsIgnoreCase("verify") && password.equalsIgnoreCase("verify")) {
 			req.setAttribute("alert", "Verifier");
