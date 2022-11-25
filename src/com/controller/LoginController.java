@@ -29,7 +29,7 @@ public class LoginController extends HttpServlet {
 		
 		String emailid=req.getParameter("emailid");
 		String password=req.getParameter("password");
-		String department=req.getParameter("dept");
+		
 		
 		LoginService lc=new LoginService();
 		boolean userStatus=lc.userLogin(emailid, password);
