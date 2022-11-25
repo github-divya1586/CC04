@@ -67,10 +67,8 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="#hero">Home</a></li>
-          <li><a href="#about">Send Email</a></li>
-          <li><a href="#services">Inboc</a></li>
-          <li><a href="#portfolio">Sent Email</a></li>
-          <li><a href="#team">Logout</a></li>
+          <li><a href="#about">Trapdoor Key</a></li>
+           <li><a href="#team">Logout</a></li>
          
       </nav><!-- .navbar -->
 
