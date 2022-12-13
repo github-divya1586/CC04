@@ -44,15 +44,9 @@
   <section id="topbar" class="topbar d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
       <div class="contact-info d-flex align-items-center">
-        <i class="bi bi-envelope d-flex align-items-center"><a href="mailto:contact@example.com">contact@example.com</a></i>
-        <i class="bi bi-phone d-flex align-items-center ms-4"><span>+1 5589 55488 55</span></i>
+        
       </div>
-      <div class="social-links d-none d-md-flex align-items-center">
-        <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
-        <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
-        <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
-        <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></i></a>
-      </div>
+     
     </div>
   </section><!-- End Top Bar -->
 
@@ -66,9 +60,10 @@
       </a>
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="#hero">Home</a></li>
-          <li><a href="#about">Trapdoor Key</a></li>
-           <li><a href="#team">Logout</a></li>
+          <li><a href="index.jsp">Home</a></li>
+          <li><a href="#about">Send Email</a></li>
+          
+          <li><a href="index.jsp">Logout</a></li>
          
       </nav><!-- .navbar -->
 
@@ -84,9 +79,7 @@
     <div class="container position-relative">
       <div class="row gy-5" data-aos="fade-in">
         <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-        <center>  <h3 style="color:#FFF">An Encrypted Cloud Email Searching and Filtering
-Scheme Based on Hidden Policy  <span>Ciphertext-Policy
-Attribute-Based Encryption With Keyword Search</span></h3></center>
+        
           
           <div class="d-flex justify-content-center justify-content-lg-start">
             <a href="#about" class=""></a>
@@ -94,23 +87,39 @@ Attribute-Based Encryption With Keyword Search</span></h3></center>
           </div>
         </div>
         <div class="col-lg-6 order-1 order-lg-2">
-          <img src="assets/img/hero-img.svg" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100">
+          
         </div>
       </div>
     </div>
 
-   
+    <div class="icon-boxes position-relative">
+      <div class="container position-relative">
+        <div class="row gy-4 mt-5">
+
+         
+
+        
+        </div>
+      </div>
+    </div>
+
     </div>
   </section>
   <!-- End Hero Section -->
 
   <main id="main">
 
-  
+   
+    <!-- ======= Clients Section ======= -->
+    <section id="clients" class="clients">
+      <div class="container" data-aos="zoom-out">
 
- </main><!-- End #main -->
+       
+      </div>
+    </section><!-- End Clients Section -->
 
-
+   
+    </main><!-- End #main -->
 
   <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
 
