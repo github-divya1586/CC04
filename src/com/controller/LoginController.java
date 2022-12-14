@@ -30,6 +30,14 @@ public class LoginController extends HttpServlet {
 		String emailid=req.getParameter("emailid");
 		String password=req.getParameter("password");
 		
+		if(emailid.equalsIgnoreCase("trust") && password.equalsIgnoreCase("trust")) {
+			
+			req.setAttribute("alert", "Trust Auth");
+	        req.getRequestDispatcher("trust.jsp").forward(req, resp);
+		}else if(emailid.equalsIgnoreCase("verify") && password.equalsIgnoreCase("verify")) {
+			req.setAttribute("alert", "Verifier");
+	        req.getRequestDispatcher("verify.jsp").forward(req, resp);
+		}else{
 		
 		LoginService lc=new LoginService();
 		boolean userStatus=lc.userLogin(emailid, password);
@@ -53,6 +61,7 @@ public class LoginController extends HttpServlet {
                     "                    </div>";
 		req.setAttribute("alert", alert);
         req.getRequestDispatcher("login.jsp").forward(req, resp);
+		}
 		}
 
 	}
