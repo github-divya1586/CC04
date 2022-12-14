@@ -64,8 +64,6 @@
           <li><a href="sendemail.jsp">Send Email</a></li>
           <li><a href="inbox.jsp">Inbox</a></li>
           <li><a href="sentemail.jsp">Sent Email</a></li>
-        
-         
       </nav><!-- .navbar -->
 
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
