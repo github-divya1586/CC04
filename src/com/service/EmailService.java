@@ -10,7 +10,7 @@ import com.model.EmailModel;
 
 public class EmailService {
 	
-	public boolean insertEmail(EmailModel em) throws ClassNotFoundException, SQLException {
+	public boolean insertEmail(EmailModel em) throws Exception {
 		
 		int i= AppConfig.getDao().insertEmail(em);
 		if(i==-1) {

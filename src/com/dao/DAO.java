@@ -14,6 +14,7 @@ import com.database.DbConnection;
 import com.model.EmailModel;
 import com.model.KycModel;
 import com.model.RegisterModel;
+import com.utils.TrippleDes;
 
 public class DAO {
 
@@ -90,8 +91,16 @@ public class DAO {
 		ResultSet rs = st.executeQuery(sql);
 		return rs;
 	}
+	
+	public ResultSet getKyc(String keyword) throws ClassNotFoundException, SQLException {
+		Connection con = DbConnection.getCon();
+		String sql = "select * from filterkeywords where keywords="+keyword ;
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+		return rs;
+	}
 
-	public int insertEmail(EmailModel em) throws ClassNotFoundException, SQLException {
+	public int insertEmail(EmailModel em) throws Exception {
 		int statusReg = 0;
 		Connection con = DbConnection.getCon();
 		String sql = "insert into emailtable values(0,?,?,?,?,?,?,?)";
@@ -105,6 +114,27 @@ public class DAO {
 		String s[]=  LocalDate.now().toString().split(" ");
 		ps.setString(7,s[0]);
 		statusReg = ps.executeUpdate();
+		if(statusReg!=-1) {
+			
+			String sql1 = "SELECT *FROM emailtable ORDER BY id DESC LIMIT 1";
+			PreparedStatement ps1 = con.prepareStatement(sql1);
+			
+			ResultSet rs = ps1.executeQuery();
+			if(rs.next()) {
+				
+				String sql2="insert into filterkeywords values(?,?,?,?)";
+				 ps1=con.prepareStatement(sql2);
+				 ps1.setInt(1, rs.getInt(1));
+				 ps1.setString(2,rs.getString(2));
+				 ps1.setString(3, TrippleDes.passwrodEnc(rs.getString(7), "enc"));
+				
+				 ps1.setString(4, "key");
+				 ps1.executeUpdate();
+				
+			}
+			
+			
+		}
 		return statusReg;
 		
 	}

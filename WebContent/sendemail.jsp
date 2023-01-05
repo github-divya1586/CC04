@@ -256,7 +256,8 @@ $( function() {
          List<EmailModel> emails= AppConfig.getEmailService().getEmails(rm.getEmailid(), "inbox");
          
          %>
-  <input type="text" class="form-control" placeholder="Enter keywords to search the mails">
+  <input type="text" class="form-control" placeholder="Enter keywords to search the mails"><br/>
+  <input type="submit" value="SEARCH" class="btn btn-primary">
        </div>
         <%}%>
     
