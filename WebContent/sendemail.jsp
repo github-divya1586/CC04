@@ -1,5 +1,12 @@
- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+ <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+<%@page import="com.model.EmailModel"%>
+<%@page import="java.util.List"%>
+<%@page import="com.configurations.AppConfig"%>
+<%@page import="java.sql.ResultSet"%>
+<%@page import="com.model.RegisterModel"%>
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
+      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -26,6 +33,14 @@
   <link href="assets/vendor/aos/aos.css" rel="stylesheet">
   <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <script src="http://code.jquery.com/jquery-1.7.js"
+    type="text/javascript"></script>
+<script
+    src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
+    type="text/javascript"></script>
+<link
+    href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
+    rel="stylesheet" type="text/css" />
 
   <!-- Template Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
@@ -36,6 +51,30 @@
   * Author: BootstrapMade.com
   * License: https://bootstrapmade.com/license/
   ======================================================== -->
+  <script type="text/javascript">
+$( function() {
+    $("input#autoText").autocomplete({
+       
+        source: function(request, response) {
+            $.ajax({
+                url: "ajax",
+                dataType: "json",
+                data: request,
+                success: function( data, textStatus, jqXHR) {
+                    console.log( data);
+                    var items = data;
+                    response(items);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                     console.log( textStatus);
+                }
+            });
+        }
+ 
+    });
+});
+    
+</script>
 </head>
 
 <body>
@@ -61,8 +100,10 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="index.jsp">Home</a></li>
-          <li><a href="#about">Send Email</a></li>
-          
+          <li><a href="sendemail.jsp?page=send">Send Email</a></li>
+           <li><a href="sendemail.jsp?page=inbox">Inbox</a></li>
+            <li><a href="sendemail.jsp?page=sent">Sent</a></li>
+              <li><a href="sendemail.jsp?page=search">Search</a></li>
           <li><a href="index.jsp">Logout</a></li>
          
       </nav><!-- .navbar -->
@@ -86,12 +127,146 @@
             <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class=""></i><span></span></a>
           </div>
         </div>
-        <div class="col-lg-6 order-1 order-lg-2">
+        <!-- Send email  -->
+        <%
+        if(request.getParameter("page").equalsIgnoreCase("send")){%>
+        	    <div class="col-lg-6 order-1 order-lg-2">
+         <%
+         RegisterModel rm= (RegisterModel)session.getAttribute("account");
+         %>
+         ${info }
+         ${alert}
+     <form action="EmailServlet" method="post">
+     <label style="color:#FFF;">From </label>
+       <input type="text" name="fromMail" class="form-control" value=<%=rm.getEmailid() %> />
+     <label style="color:#FFF;">To</label>
+       <input type="text" name="toMail" id="autoText" class="form-control"/>
+       <label style="color:#FFF;">Subject</label>
+       <input type="text" name="subject" class="form-control"/>
+       <label style="color:#FFF;">Key words</label>
+       <input type="text" name="keywords" class="form-control"/><br/>
+       <select class="form-control" name="dept">
+       <%
+       ResultSet rs=AppConfig.getDao().getDept();
+       while(rs.next()){%>
+    	 <option><%=rs.getString(1)%></option>  
+      <%  }
+       %>
+       
+       </select>
+       
+       <label> </label>
+       <textarea rows="4" cols="d" class="form-control" name="body"></textarea><br/>
+       
+       <input type="submit" value="submit" class="btn btn-primary">
+
+      </form>
+       
+       </div>
+        <%}%>
+    
+          <!-- end of send email -->
+          
+          
+          
+           <!-- View  Sent email  -->
+        <%
+        if(request.getParameter("page").equalsIgnoreCase("sent")){%>
+        	    <div class="col-lg-6 order-1 order-lg-2">
+         <%
+         RegisterModel rm= (RegisterModel)session.getAttribute("account");
+         
+         List<EmailModel> emails= AppConfig.getEmailService().getEmails(rm.getEmailid(), "sent");
+         
+         %>
+     <table class="table">
+     <tr>
+     <th>TO</th>
+      <th>Subject</th>
+       <th>date</th>
+       </tr>
+						<%
+						for (EmailModel em : emails) {
+						%>
+
+						<tr>
+							<th><%=em.getFromEmail()%></th>
+							<th><%=em.getSubject()%></th>
+							<th><%=em.getDate()%>
+						</tr>
+
+						<%
+						}
+						%>
+
+
+					</table>
+       
+       </div>
+        <%}%>
+    
+          <!-- end of view sent emails -->
+          
+           <!-- view Inbox email  -->
+         <%
+        if(request.getParameter("page").equalsIgnoreCase("inbox")){%>
+        	    <div class="col-lg-6 order-1 order-lg-2">
+         <%
+         RegisterModel rm= (RegisterModel)session.getAttribute("account");
+         
+         List<EmailModel> emails= AppConfig.getEmailService().getEmails(rm.getEmailid(), "inbox");
+         
+         %>
+     <table class="table">
+     <tr>
+     <th>From</th>
+      <th>Subject</th>
+       <th>date</th>
+       </tr>
+						<%
+						for (EmailModel em : emails) {
+						%>
+
+						<tr>
+							<th><%=em.getFromEmail()%></th>
+							<th><%=em.getSubject()%></th>
+							<th><%=em.getDate()%>
+						</tr>
+
+						<%
+						}
+						%>
+
+
+					</table>
+       
+       </div>
+        <%}%>
+    
+          <!-- end of inbox email -->
+          
+          
+             <!-- view Inbox email  -->
+         <%
+        if(request.getParameter("page").equalsIgnoreCase("search")){%>
+        	    <div class="col-lg-6 order-1 order-lg-2">
+         <%
+         RegisterModel rm= (RegisterModel)session.getAttribute("account");
+         
+         List<EmailModel> emails= AppConfig.getEmailService().getEmails(rm.getEmailid(), "inbox");
+         
+         %>
+  <input type="text" class="form-control" placeholder="Enter keywords to search the mails">
+       </div>
+        <%}%>
+    
+          <!-- end of inbox email -->
+          
+          
           
         </div>
       </div>
-    </div>
-
+   
     <div class="icon-boxes position-relative">
       <div class="container position-relative">
         <div class="row gy-4 mt-5">
@@ -103,7 +278,7 @@
       </div>
     </div>
 
-    </div>
+   
   </section>
   <!-- End Hero Section -->
 
@@ -113,7 +288,7 @@
     <!-- ======= Clients Section ======= -->
     <section id="clients" class="clients">
       <div class="container" data-aos="zoom-out">
-
+   
        
       </div>
     </section><!-- End Clients Section -->

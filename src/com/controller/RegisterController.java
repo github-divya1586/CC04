@@ -45,6 +45,7 @@ public class RegisterController  extends HttpServlet{
 	                    "                        <p style=\"font-family: Ubuntu-Bold; font-size: 18px; margin: 0.25em 0; text-align: center\">\n" +
 	                    "                            Register Success!\n" +
 	                    "                        </p>\n" +
+	                    "<a href=\"login.jsp\">Login</a> "+
 	                    "                    </div>";
 			req.setAttribute("info", info);
             req.getRequestDispatcher("register.jsp").forward(req, resp);

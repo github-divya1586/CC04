@@ -14,5 +14,26 @@ public class DbConnection {
 		return con;
 		
 	}
+	
+	public static void main(String args[]) {
+		
+		try {
+			con=DbConnection.getCon();
+		//	String s= con==null?"false":"true";
+			
+			if(con==null) {
+				System.out.println("true");
+			}else {
+				System.out.println("false");
+			}
+		//	System.out.println();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

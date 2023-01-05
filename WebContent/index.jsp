@@ -61,7 +61,7 @@
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="#hero">Home</a></li>
-          <li><a href="sendemail.jsp">Send Email</a></li>
+          <li><a href="sendemail.jsp?page=send">Send Email</a></li>
           <li><a href="inbox.jsp">Inbox</a></li>
           <li><a href="sentemail.jsp">Sent Email</a></li>
       </nav><!-- .navbar -->

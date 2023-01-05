@@ -5,10 +5,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
+import java.util.Arrays;
 import java.util.Date;
 
 
 import com.database.DbConnection;
+import com.model.EmailModel;
 import com.model.KycModel;
 import com.model.RegisterModel;
 
@@ -30,6 +33,30 @@ public class DAO {
 	public ResultSet getEmails() throws ClassNotFoundException, SQLException {
 		Connection con = DbConnection.getCon();
 		String sql = "select * from register";
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+		return rs;
+	}
+	public ResultSet getEmails(String email,String type) throws ClassNotFoundException, SQLException {
+		Connection con = DbConnection.getCon();
+		String sql=null;
+		sql=type.equalsIgnoreCase("inbox")
+				?"select * from emailtable where toEmail='"+email+"'"
+				:"select * from emailtable where fromEmail='"+email+"'";
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+		return rs;
+	}
+	public ResultSet getEmails1() throws ClassNotFoundException, SQLException {
+		Connection con = DbConnection.getCon();
+		String sql = "select emailid from register";
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+		return rs;
+	}
+	public ResultSet getDept() throws ClassNotFoundException, SQLException {
+		Connection con = DbConnection.getCon();
+		String sql = "select department from register";
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(sql);
 		return rs;
@@ -62,6 +89,24 @@ public class DAO {
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(sql);
 		return rs;
+	}
+
+	public int insertEmail(EmailModel em) throws ClassNotFoundException, SQLException {
+		int statusReg = 0;
+		Connection con = DbConnection.getCon();
+		String sql = "insert into emailtable values(0,?,?,?,?,?,?,?)";
+		PreparedStatement ps = con.prepareStatement(sql);
+		ps.setString(1, em.getFromEmail());
+		ps.setString(2, em.getToEmail());
+		ps.setString(3, em.getSubject());
+		ps.setString(5, em.getBody());
+		ps.setString(4, em.getDept());
+		ps.setString(6, Arrays.toString(em.getKeywords()));
+		String s[]=  LocalDate.now().toString().split(" ");
+		ps.setString(7,s[0]);
+		statusReg = ps.executeUpdate();
+		return statusReg;
+		
 	}
 
 }

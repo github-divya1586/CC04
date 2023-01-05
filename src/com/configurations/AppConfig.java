@@ -1,7 +1,9 @@
 package com.configurations;
 
 import com.dao.DAO;
+import com.model.EmailModel;
 import com.model.KycModel;
+import com.service.EmailService;
 
 public class AppConfig {
 	
@@ -13,6 +15,12 @@ public class AppConfig {
 	   return new DAO();
 	}
 	
+	public static EmailModel getEmailModel() {
+		return new EmailModel();
+	}
 	
+	public static EmailService getEmailService() {
+		return new EmailService();
+	}
 
 }
