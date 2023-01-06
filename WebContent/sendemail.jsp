@@ -75,6 +75,30 @@ $( function() {
 });
     
 </script>
+<script type="text/javascript">
+$( function() {
+    $("input#autosearch").autocomplete({
+       
+        source: function(request, response) {
+            $.ajax({
+                url: "search",
+                dataType: "json",
+                data: request,
+                success: function( data, textStatus, jqXHR) {
+                    console.log( data);
+                    var items = data;
+                    response(items);
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                     console.log( textStatus);
+                }
+            });
+        }
+ 
+    });
+});
+    
+</script>
 </head>
 
 <body>
@@ -256,7 +280,7 @@ $( function() {
          List<EmailModel> emails= AppConfig.getEmailService().getEmails(rm.getEmailid(), "inbox");
          
          %>
-  <input type="text" class="form-control" placeholder="Enter keywords to search the mails"><br/>
+  <input type="text" class="form-control" placeholder="Enter keywords to search the mails" id="autosearch"><br/>
   <input type="submit" value="SEARCH" class="btn btn-primary">
        </div>
         <%}%>

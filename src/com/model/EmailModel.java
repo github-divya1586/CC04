@@ -8,7 +8,7 @@ public class EmailModel {
 	private String subject;
 	private String dept;
 	private String body;
-	private String[] keywords;
+	private String keywords;
 	private String date;
 	
 	
@@ -56,12 +56,13 @@ public class EmailModel {
 	public void setBody(String body) {
 		this.body = body;
 	}
-	public String[] getKeywords() {
+	public String getKeywords() {
 		return keywords;
 	}
-	public void setKeywords(String[] keywords) {
+	public void setKeywords(String keywords) {
 		this.keywords = keywords;
 	}
+	
 	
 	
 

@@ -53,7 +53,7 @@ public class EmailServlet extends HttpServlet {
 		
 		em.setFromEmail(fromName);em.setToEmail(toName);
 		em.setSubject(subject); em.setDept(dept);em.setBody(body);
-    	em.setKeywords(keywords.split(","));	
+    	em.setKeywords(keywords);	
     	
     	 try {
 			boolean status=AppConfig.getEmailService().insertEmail(em);

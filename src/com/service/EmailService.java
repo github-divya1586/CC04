@@ -7,6 +7,7 @@ import java.util.List;
 
 import com.configurations.AppConfig;
 import com.model.EmailModel;
+import com.utils.TrippleDes;
 
 public class EmailService {
 	
@@ -20,7 +21,7 @@ public class EmailService {
 		
 	}
 	
-	public List<EmailModel> getEmails(String email,String type) throws ClassNotFoundException, SQLException{
+	public List<EmailModel> getEmails(String email,String type) throws Exception{
 		
 		ResultSet rs=AppConfig.getDao().getEmails(email,type);
 		
@@ -45,7 +46,7 @@ public class EmailService {
 		return emails;
 	}
 
-	private List<EmailModel> sentEmail(ResultSet rs) throws SQLException {
+	private List<EmailModel> sentEmail(ResultSet rs) throws Exception {
 		List<EmailModel> emails=new ArrayList<>();
 		while(rs.next()) {
 			EmailModel em=AppConfig.getEmailModel();
@@ -55,8 +56,30 @@ public class EmailService {
 			String s=rs.getString("keywords");
 			System.out.println("the keywords are"+convertToString(s));
 			emails.add(em);
+			getKeywords("sample");
 		}
 		return emails;
+	}
+	
+	public List<String> getKeywords(String keywords) throws Exception {
+		
+		List<String> keyWords=new ArrayList<String>();
+		ResultSet rs=AppConfig.getDao().getKeyWords();
+		while(rs.next()) {
+			
+			String enct=TrippleDes.passwrodEnc(rs.getString(1), "decr");
+		//	String s=convertToString(enct);
+			System.out.println(enct);
+			
+			try {
+				//String s1[]=enct.split(",");
+				keyWords.add(enct);
+			}catch(Exception e) {
+				System.out.println("no , in keywords");
+			}
+		}
+		
+		return keyWords;
 	}
 	
 	public String convertToString(String str) {

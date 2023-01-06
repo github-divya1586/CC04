@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.Arrays;
 import java.util.Date;
 
-
+import com.configurations.AppConfig;
 import com.database.DbConnection;
 import com.model.EmailModel;
 import com.model.KycModel;
@@ -110,7 +110,8 @@ public class DAO {
 		ps.setString(3, em.getSubject());
 		ps.setString(5, em.getBody());
 		ps.setString(4, em.getDept());
-		ps.setString(6, Arrays.toString(em.getKeywords()));
+		//String s1= AppConfig.getEmailService().convertToString(sql)
+		ps.setString(6, em.getKeywords());
 		String s[]=  LocalDate.now().toString().split(" ");
 		ps.setString(7,s[0]);
 		statusReg = ps.executeUpdate();
@@ -137,6 +138,14 @@ public class DAO {
 		}
 		return statusReg;
 		
+	}
+
+	public ResultSet getKeyWords() throws ClassNotFoundException, SQLException {
+		Connection con = DbConnection.getCon();
+		String sql = "select keywords from filterkeywords";
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+		return rs;
 	}
 
 }
