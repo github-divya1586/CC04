@@ -49,6 +49,7 @@ public class LoginService {
 			rm.setName(rs.getString(2));
 			rm.setEmailid(rs.getString(3));
 			rm.setPassword(rs.getString(4));
+			rm.setDepartment(rs.getString("department"));
 
 		} while (rs.next());
 

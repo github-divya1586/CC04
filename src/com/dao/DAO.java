@@ -14,6 +14,7 @@ import com.database.DbConnection;
 import com.model.EmailModel;
 import com.model.KycModel;
 import com.model.RegisterModel;
+import com.utils.HashCodeGenearate;
 import com.utils.TrippleDes;
 
 public class DAO {
@@ -51,6 +52,17 @@ public class DAO {
 	public ResultSet getEmails1() throws ClassNotFoundException, SQLException {
 		Connection con = DbConnection.getCon();
 		String sql = "select emailid from register";
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+		return rs;
+	}
+	
+	public ResultSet getEmailsforKey(String keyword) throws ClassNotFoundException, SQLException {
+		Connection con = DbConnection.getCon();
+		String sql = "SELECT *"
+				+ "FROM emailtable "
+				+ " WHERE keywords LIKE '%"+keyword+"%'";
+		System.out.println("the sql isssss"+sql);
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(sql);
 		return rs;
@@ -129,7 +141,7 @@ public class DAO {
 				 ps1.setString(2,rs.getString(2));
 				 ps1.setString(3, TrippleDes.passwrodEnc(rs.getString(7), "enc"));
 				
-				 ps1.setString(4, "key");
+				 ps1.setString(4, HashCodeGenearate.getHashValue(rs.getString(2)));
 				 ps1.executeUpdate();
 				
 			}
@@ -143,6 +155,14 @@ public class DAO {
 	public ResultSet getKeyWords() throws ClassNotFoundException, SQLException {
 		Connection con = DbConnection.getCon();
 		String sql = "select keywords from filterkeywords";
+		Statement st = con.createStatement();
+		ResultSet rs = st.executeQuery(sql);
+		return rs;
+	}
+
+	public ResultSet getUsers() throws ClassNotFoundException, SQLException {
+		Connection con = DbConnection.getCon();
+		String sql = "select * from register";
 		Statement st = con.createStatement();
 		ResultSet rs = st.executeQuery(sql);
 		return rs;

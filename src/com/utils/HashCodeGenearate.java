@@ -47,6 +47,25 @@ public class HashCodeGenearate
           return saltvalue+","+encryptedpassword;
     	
     }
+    
+    public static String[] getHashValueForUsers(String s) {
+    	
+  	  String password = s;  
+        
+        /* generates the Salt value. It can be stored in a database. */  
+        String saltvalue = PassBasedEnc.getSaltvalue(30);  
+          
+        /* generates an encrypted password. It can be stored in a database.*/  
+        String encryptedpassword = PassBasedEnc.generateSecurePassword(password, saltvalue); 
+        
+        //String s1=saltvalue+","+encryptedpassword;
+        String pass[]=new String[2];
+        pass[0]=encryptedpassword;
+        pass[1]=saltvalue;
+        
+        return pass;
+  	
+  }
 } 
 
 

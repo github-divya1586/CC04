@@ -1,4 +1,5 @@
- <%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
+ <%@page import="java.util.ArrayList"%>
+<%@page import="org.apache.jasper.tagplugins.jstl.core.ForEach"%>
 <%@page import="com.model.EmailModel"%>
 <%@page import="java.util.List"%>
 <%@page import="com.configurations.AppConfig"%>
@@ -26,7 +27,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<!-- Remember to include jQuery :) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 
+<!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -44,6 +50,7 @@
 
   <!-- Template Main CSS File -->
   <link href="assets/css/main.css" rel="stylesheet">
+   
 
   <!-- =======================================================
   * Template Name: Impact - v1.1.1
@@ -99,6 +106,39 @@ $( function() {
 });
     
 </script>
+<style>
+.test1 {
+  background-color: red;
+  position: relative;
+  animation-name: example;
+  animation-duration: 4s;
+  animation-delay: 1s;
+}
+
+@keyframes example {
+  0%   {background-color:red; left:0px; top:0px;}
+  25%  {background-color:red; left:200px; top:0px;}
+  50%  {background-color:red; left:0px; top:0px;}
+  75%  {background-color:red; left:200px; top:0px;}
+  100% {background-color:red; left:0px; top:0px;}
+}
+</style>
+
+<style> 
+.test {
+ 
+  background: red;
+  position: relative;
+  animation-name: example;
+  animation-duration: 3s;  
+  animation-fill-mode: forwards;
+}
+
+@keyframes example {
+ from {top: 0px;}
+  to {left: 200px; background-color: red;}
+}
+</style>
 </head>
 
 <body>
@@ -128,7 +168,7 @@ $( function() {
            <li><a href="sendemail.jsp?page=inbox">Inbox</a></li>
             <li><a href="sendemail.jsp?page=sent">Sent</a></li>
               <li><a href="sendemail.jsp?page=search">Search</a></li>
-          <li><a href="index.jsp">Logout</a></li>
+          <li><a href="logout.jsp">Logout</a></li>
          
       </nav><!-- .navbar -->
 
@@ -141,7 +181,7 @@ $( function() {
 
   <!-- ======= Hero Section ======= -->
   <section id="hero" class="hero">
-    <div class="container position-relative">
+    <div class="container position-relative" style="height: 100vh">
       <div class="row gy-5" data-aos="fade-in">
         <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
         
@@ -270,22 +310,82 @@ $( function() {
           <!-- end of inbox email -->
           
           
-             <!-- view Inbox email  -->
+             <!-- view search keword email  -->
          <%
         if(request.getParameter("page").equalsIgnoreCase("search")){%>
         	    <div class="col-lg-6 order-1 order-lg-2">
+        	    
+
+<!-- Link to open the modal -->
+
          <%
          RegisterModel rm= (RegisterModel)session.getAttribute("account");
+         System.out.println("email id in search"+rm.getEmailid());
          
-         List<EmailModel> emails= AppConfig.getEmailService().getEmails(rm.getEmailid(), "inbox");
+        // List<EmailModel> emails= AppConfig.getEmailService().getEmails(rm.getEmailid(), "inbox");
+     
          
          %>
-  <input type="text" class="form-control" placeholder="Enter keywords to search the mails" id="autosearch"><br/>
+         <form action="EmailSearch" method="get">
+  <input type="text" class="form-control" name="keyword" placeholder="Enter keywords to search the mails" id="autosearch"><br/>
   <input type="submit" value="SEARCH" class="btn btn-primary">
+       </form>
+       <%
+       if(request.getAttribute("emails")!=null){
+       
+    	   List<EmailModel> emails=new ArrayList<EmailModel>();
+           emails= (List<EmailModel>)request.getAttribute("emails");
+       %>
+        
+        <table class="table">
+       <tr><td>Mail Id</td>
+       <td>subject</td>
+       <td>Date</td>
+       </tr>
+       <%
+       String cssStyle=null;
+       for(EmailModel em: emails){
+       System.out.println("emails dept"+em.getDept());
+       System.out.println("register dept"+rm.getDepartment());
+    	   if(em.getDept().equalsIgnoreCase(rm.getDepartment())){%>
+    	<tr style="color:#FFF;">
+    	 <td><%=em.getFromEmail() %></td>
+    	 <td><%=em.getSubject() %></td>
+    	 <td><%=em.getDate() %></td>
+    	 <div id="ex1" class="modal" style="width: 500px; height: 500px;top:100px;left:100px;">
+  <p><%=em.getBody()%></p>
+  <a href="#" rel="modal:close">Close</a>
+</div>
+    	 <td><p><a href="#ex1" rel="modal:open" style="color:#FFFFFF;" class="btn btn-danger">Open Mail</a></p></td>
+    	 </tr>
+    	   <% }else{%>
+    		   <tr style="color:#000;">
+    	 <td class="test" style="text:"not accessable""><%=em.getFromEmail() %></td>
+    	 <a href=""><td><%=em.getSubject() %></td></a>
+    	 <td><%=em.getDate() %></td>
+    	 </tr>
+    	   <% }
+       %>
+       
+    	 
+    	 <%} %>
+       
+       
+       
+       
+       </table>
+       
+    	   
+       <%}
+       %>
+      
+       
        </div>
+       
+       
         <%}%>
     
-          <!-- end of inbox email -->
+          <!-- end of search keyword email -->
           
           
           

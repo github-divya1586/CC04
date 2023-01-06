@@ -1,13 +1,14 @@
- <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html>
+<%@page import="com.configurations.AppConfig"%>
+<%@page import="com.model.RegisterModel"%>
+<%@page import="java.util.List"%>
 <html lang="en">
 
 <head>
   <meta charset="utf-8">
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-  <title>VTJCC04</title>
+  <title>Impact Bootstrap Template - Blog Details</title>
   <meta content="" name="description">
   <meta content="" name="keywords">
 
@@ -19,7 +20,12 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,600;1,700&family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Raleway:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+<!-- Remember to include jQuery :) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.0.0/jquery.min.js"></script>
 
+<!-- jQuery Modal -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
   <!-- Vendor CSS Files -->
   <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
   <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
@@ -44,9 +50,11 @@
   <section id="topbar" class="topbar d-flex align-items-center">
     <div class="container d-flex justify-content-center justify-content-md-between">
       <div class="contact-info d-flex align-items-center">
-       
+     
       </div>
-      
+      <div class="social-links d-none d-md-flex align-items-center">
+        
+      </div>
     </div>
   </section><!-- End Top Bar -->
 
@@ -56,14 +64,16 @@
       <a href="index.html" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
         <!-- <img src="assets/img/logo.png" alt=""> -->
-        <h1>Cloud Computing <span>Project..</span></h1>
+        <h1>AN ENCRYPTED CLOUD EMAIL SEARCHING <span>.</span></h1>
       </a>
       <nav id="navbar" class="navbar">
         <ul>
           <li><a href="#hero">Home</a></li>
-          <li><a href="sendemail.jsp?page=send">Send Email</a></li>
-          <li><a href="logout.jsp">Logout</a></li>
-      
+          <li><a href="admin.jsp?page=users">View Users</a></li>
+          <li><a href="admin.jsp?page=keys">Generate Keys </a></li>
+          <li><a href="#portfolio">Logout</a></li>
+          
+    
       </nav><!-- .navbar -->
 
       <i class="mobile-nav-toggle mobile-nav-show bi bi-list"></i>
@@ -73,33 +83,118 @@
   </header><!-- End Header -->
   <!-- End Header -->
 
-  <!-- ======= Hero Section ======= -->
-  
-  <section id="hero" class="hero">
+<%
+if(request.getParameter("page").equalsIgnoreCase("home")){%>
+	 <main id="main">
 
-    <div class="container position-relative" style="height: 100vh">
-      <div class="row gy-5" data-aos="fade-in">
-        <div class="col-lg-6 order-2 order-lg-1 d-flex flex-column justify-content-center text-center text-lg-start">
-        <center>  <h3 style="color:#FFF">An Encrypted Cloud Email Searching and Filtering
-Scheme Based on Hidden Policy  <span>Ciphertext-Policy
-Attribute-Based Encryption With Keyword Search</span></h3></center>
-          
-          <div class="d-flex justify-content-center justify-content-lg-start">
-            <a href="#about" class=""></a>
-            <a href="https://www.youtube.com/watch?v=LXb3EKWsInQ" class="glightbox btn-watch-video d-flex align-items-center"><i class=""></i><span></span></a>
-          </div>
-        </div>
-        <div class="col-lg-6 order-1 order-lg-2">
-          <img src="assets/img/hero-img.svg" class="img-fluid" alt="" data-aos="zoom-out" data-aos-delay="100">
-        </div>
-      </div>
-    </div>
+<div class="row">
+<div class="col-4"></div>
+<div class="col-4">
+<h3>Welcome to Admin Page</h3>
 
-   
-  </section>
-  
-   
-  <!-- End Hero Section -->
+</div>
+<div class="col-4"></div>
+</div>
+
+
+   </main><!-- End #main -->
+	
+<%}%>
+
+<!-- -users data -->
+<%
+if(request.getParameter("page").equalsIgnoreCase("users")){%>
+	 <main id="main">
+
+<div class="row" style="margin-top: 100px;">
+<div class="col-4"></div>
+<div class="col-4">
+<%
+List<RegisterModel> reg=AppConfig.getEmailSearchService().getUsers(); 
+%>
+<table class="table">
+<tr>
+<th>UserId</th>
+<th>Email Id</th>
+<th>UserName</th>
+<th>Department</th>
+</tr>
+<%
+for(RegisterModel rm:reg){%>
+	<tr>
+	<td><%=rm.getUserid() %></td>
+	<td><%=rm.getEmailid() %></td>
+	<td><%=rm.getName() %></td>
+	<td><%=rm.getDepartment() %></td>
+	
+	</tr>
+	
+	
+<% }%>
+
+
+
+</table>
+
+</div>
+<div class="col-4"></div>
+</div>
+
+
+   </main><!-- End #main -->
+	
+<%}%>
+ 
+ <!-- end of users data -->
+ 
+ <!-- -users data -->
+<%
+if(request.getParameter("page").equalsIgnoreCase("keys")){%>
+	 <main id="main">
+
+<div class="row" style="margin-top: 100px;">
+<div class="col-4"></div>
+<div class="col-4">
+<%
+List<RegisterModel> reg=AppConfig.getEmailSearchService().getUsers(); 
+%>
+<table class="table">
+<tr>
+<th>UserId</th>
+<th>Email Id</th>
+<th>UserName</th>
+<th>Department</th>
+<th>public key</th>
+<th>Private key</th>
+</tr>
+<%
+for(RegisterModel rm:reg){%>
+	<tr>
+	<td><%=rm.getUserid() %></td>
+	<td><%=rm.getEmailid() %></td>
+	<td><%=rm.getName() %></td>
+	<td><%=rm.getDepartment() %></td>
+	
+	</tr>
+	
+	
+<% }%>
+
+
+
+</table>
+
+</div>
+<div class="col-4"></div>
+</div>
+
+
+   </main><!-- End #main -->
+	
+<%}%>
+ 
+ <!-- end of users data -->
+
 
 
 

@@ -3,6 +3,7 @@ package com.configurations;
 import com.dao.DAO;
 import com.model.EmailModel;
 import com.model.KycModel;
+import com.service.EmailSearchService;
 import com.service.EmailService;
 
 public class AppConfig {
@@ -21,6 +22,10 @@ public class AppConfig {
 	
 	public static EmailService getEmailService() {
 		return new EmailService();
+	}
+	
+	public static EmailSearchService getEmailSearchService() {
+		return new EmailSearchService();
 	}
 
 }

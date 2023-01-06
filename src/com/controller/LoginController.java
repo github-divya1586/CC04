@@ -30,10 +30,10 @@ public class LoginController extends HttpServlet {
 		String emailid=req.getParameter("emailid");
 		String password=req.getParameter("password");
 		
-		if(emailid.equalsIgnoreCase("trust") && password.equalsIgnoreCase("trust")) {
+		if(emailid.equalsIgnoreCase("admin@gmail.com") && password.equalsIgnoreCase("admin")) {
 			
 			req.setAttribute("alert", "Trust Auth");
-	        req.getRequestDispatcher("trust.jsp").forward(req, resp);
+	        req.getRequestDispatcher("admin.jsp?page=home").forward(req, resp);
 		}else if(emailid.equalsIgnoreCase("verify") && password.equalsIgnoreCase("verify")) {
 			req.setAttribute("alert", "Verifier");
 	        req.getRequestDispatcher("verify.jsp").forward(req, resp);
