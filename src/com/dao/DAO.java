@@ -120,8 +120,8 @@ public class DAO {
 		ps.setString(1, em.getFromEmail());
 		ps.setString(2, em.getToEmail());
 		ps.setString(3, em.getSubject());
-		ps.setString(5, em.getBody());
-		ps.setString(4, em.getDept());
+		ps.setString(4, em.getBody());
+		ps.setString(5, em.getDept());
 		//String s1= AppConfig.getEmailService().convertToString(sql)
 		ps.setString(6, em.getKeywords());
 		String s[]=  LocalDate.now().toString().split(" ");

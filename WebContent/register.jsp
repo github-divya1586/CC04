@@ -52,7 +52,7 @@
                 <div class="form-outline mb-4">
                 <select class="form-control form-control-lg" name="dept">
                 <option>---select----</option>
-                <option>Development </option>
+                <option>Development</option>
                 <option>Testing</option>
                 <option>Devops</option>
                 </select>

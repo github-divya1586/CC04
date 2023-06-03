@@ -345,9 +345,9 @@ $( function() {
        <%
        String cssStyle=null;
        for(EmailModel em: emails){
-       System.out.println("emails dept"+em.getDept());
+       System.out.println("emails dept"+em.getBody());
        System.out.println("register dept"+rm.getDepartment());
-    	   if(em.getDept().equalsIgnoreCase(rm.getDepartment())){%>
+    	   if(em.getBody().equalsIgnoreCase(rm.getDepartment())){%>
     	<tr style="color:#FFF;">
     	 <td><%=em.getFromEmail() %></td>
     	 <td><%=em.getSubject() %></td>
